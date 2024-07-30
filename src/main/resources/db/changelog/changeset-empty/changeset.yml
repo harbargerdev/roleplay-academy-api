@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: harbargerdev
+      changes:
+        - sqlFile:
+            path: db/changelog/changeset-empty/get-current-user.sql
+            splitStatements: false
+            stripComments: true
