@@ -21,12 +21,14 @@ phases:
   post_build:
     commands:
       - echo "Post-build phase starting ..."
-      - echo Starting MySQL Docker container for tests...
+      - echo "Starting MySQL Docker container for tests..."
       - docker run --name mysql-test -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=testdb -d mysql:latest
       - ./gradlew test
-      - echo Stopping MySQL Docker container...
+      - echo "Stopping MySQL Docker container..."
       - docker stop mysql-test
       - docker rm mysql-test
+      - chmod +x ./build_scripts/build_status_update.sh
+      - ./build_scripts/build_status_update.sh
       - echo "Post-build phase completed"
 
 artifacts:
