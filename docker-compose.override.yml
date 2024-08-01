@@ -1,0 +1,8 @@
+version: '3.7'
+
+services:
+  spring-api:
+    depends_on:
+      - mysql
+    environment:
+      - 'SPRING_PROFILES_ACTIVE=test'

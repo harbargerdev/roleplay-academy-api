@@ -4,10 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RoleplayacademyapiApplication {
+public class RoleplayAcademyApiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RoleplayacademyapiApplication.class, args);
+		SpringApplication.run(RoleplayAcademyApiApplication.class, args);
 	}
-
 }
