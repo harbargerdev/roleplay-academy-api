@@ -2,7 +2,7 @@
 FROM gradle:latest AS BUILD
 WORKDIR /usr/build
 COPY . .
-RUN gradle build --scan --no-daemon -Dscan
+RUN gradle build
 
 # Package Stage
 FROM amazoncorretto:21
