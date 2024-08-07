@@ -12,7 +12,7 @@ RUN mkdir -p /usr/app
 ENV JAR_NAME=roleplayacademyapi-0.0.1-SNAPSHOT.jar.jar
 ENV APP_HOME=/usr/app
 WORKDIR $APP_HOME
-COPY --from=BUILD $APP_HOME .
+COPY --from=BUILD /usr/build/build/libs/$JAR_NAME $APP_HOME
 
 # For debug purposes
 RUN pwd
