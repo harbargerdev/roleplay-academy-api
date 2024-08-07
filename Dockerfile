@@ -2,12 +2,13 @@
 FROM amazoncorretto:21
 
 # Set the working directory in the container
-WORKDIR /app
+ENV APP_HOME /app
+WORKDIR $APP_HOME
 
 # For debug purposes
 RUN pwd
 RUN ls -la /app
-RUN ls -la build
+RUN ls -la /home/build
 
 # Copy the jar file into the container at /app
 COPY build/libs/*.jar /app

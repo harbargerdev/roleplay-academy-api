@@ -1,5 +1,7 @@
 # roleplay-academy-api
-This repository is the back-end API repository for the Roleplay Academy API
+This repository is the back-end API repository for the Roleplay Academy API.
+
+Latest CI Build: ![CI](https://codebuild.us-east-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoia0NjMjdZeGxmWkN2SUJFOFQzZC9hcFA5UytGWmlKaVVxK3dJbkdnU1ZITkFkQUMydDliOVk2K3JDSDJNdXBNYU1lbmM3bHNDd0FaSWRuWEhIRTAwSzZ3PSIsIml2UGFyYW1ldGVyU3BlYyI6Ik5OM1lTaGN3WGF5OUY2ZEkiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=main)
 
 ## Getting Started
 To get started with this project, you will need to have the following installed on your machine:

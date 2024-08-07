@@ -1,0 +1,43 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto21
+    commands:
+      - echo "Installing dependencies"
+      - chmod +x ./gradlew
+      - ./gradlew clean
+  pre_build:
+    commands:
+      - echo "Pre-build phase starting ..."
+      - ./gradlew compileJava
+      - echo "Logging in to the Amazon ECR"
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - echo "Pre-build phase completed"
+  build:
+    commands:
+      - echo "Build phase starting ..."
+      - echo "Starting MySQL Docker container for tests ..."
+      - docker run --name mysql-test -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=testdb -d mysql:latest
+      - echo "Starting the Gradle testing task ..."
+      - ./gradlew test
+      - echo "Stopping MySQL Docker container ..."
+      - docker stop mysql-test
+      - docker rm mysql-test
+      - echo "Building Docker image ..."
+      - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
+      - echo "Tagging Docker image ..."
+      - docker tag roleplay-academy-api:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/roleplay-academy-api:latest
+      - echo "Build phase completed"
+  post_build:
+    commands:
+      - echo "Post-build phase starting ..."
+      - echo "Pushing Docker image to ECR ..."
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/roleplay-academy-api:latest
+      - echo "Post-build phase completed"
+
+artifacts:
+  files:
+    - build/libs/**/*.jar
+  discard-paths: yes
