@@ -8,6 +8,7 @@ RUN gradle build --stacktrace
 FROM amazoncorretto:21
 
 # Set the working directory in the container
+RUN mkdir -p /usr/app
 ENV JAR_NAME=roleplayacademyapi-0.0.1-SNAPSHOT.jar.jar
 ENV APP_HOME=/usr/app
 WORKDIR $APP_HOME
