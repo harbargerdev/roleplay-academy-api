@@ -7,11 +7,11 @@ WORKDIR $APP_HOME
 
 # For debug purposes
 RUN pwd
-RUN ls -la /app
-RUN ls -la /home/build
+RUN ls -la $APP_HOME
+RUN ls -la build
 
 # Copy the jar file into the container at /app
-COPY build/libs/*.jar /app
+COPY build/libs/*.jar $APP_HOME
 
 # Expose the port the application runs on
 EXPOSE 8080
