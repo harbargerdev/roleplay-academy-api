@@ -4,6 +4,11 @@ FROM amazoncorretto:21
 # Set the working directory in the container
 WORKDIR /app
 
+# For debug purposes
+RUN pwd
+RUN ls -la /app
+RUN ls -la build
+
 # Copy the jar file into the container at /app
 COPY build/libs/*.jar /app
 
