@@ -4,9 +4,6 @@ jobs:
   Hello-World-Job:
     runs-on: self-hosted
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
       - name: Run AWS Codebuild
         run: |
           echo "Starting AWS CodeBuild with buildspec.yml..."
