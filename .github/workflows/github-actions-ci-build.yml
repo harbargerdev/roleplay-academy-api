@@ -1,9 +1,17 @@
-name: Hello World
+name: CI Build
 on: [push]
 jobs:
   Hello-World-Job:
-    runs-on:
-      - codebuild-roleplay-academy-api-ci-${{ github.run_id }}-${{ github.run_attempt }}
-      - buildspec-override:true
+    runs-on: self-hosted
     steps:
-      - run: echo "Hello World"
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run AWS Codebuild
+        run: |
+          echo "Starting AWS CodeBuild with buildspec.yml..."
+          aws codebuild start-build \
+            --project-name codebuild-roleplay-academy-api-ci-${{ github.run_id }}-${{ github.run_attempt }} \
+            --source-version ${{ github.sha }} \
+            --environment-variables-override name=GITHUB_REF,value=${{ github.ref }} \
+            --buildspec-override buildspec-ci.yml
