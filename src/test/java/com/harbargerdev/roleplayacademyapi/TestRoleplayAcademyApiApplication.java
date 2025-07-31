@@ -2,7 +2,7 @@ package com.harbargerdev.roleplayacademyapi;
 
 import org.springframework.boot.SpringApplication;
 
-public class TestRoleplayacademyapiApplication {
+public class TestRoleplayAcademyApiApplication {
 
 	public static void main(String[] args) {
 
