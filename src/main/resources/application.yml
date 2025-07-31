@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: roleplayacademyapi
+    profiles:
+      active: dev
+  datasource:
+    url: jdbc:mysql://mysql:3306/mydatabase?useSSL=false&allowPublic
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: myuser
+    password: ####
+  #jpa:
+    #database-platform: org.hibernate.dialect.MySQL8Dialect
+    #show-sql: true
+    #hibernate:
+      #ddl-auto: update
+    servlet:
+        load-time-weaver: true
+server:
+    port: 8080
+    error:
+        include-message: always
+    servlet:
+        context-path: /api
+logging:
+    level:
+        org.springframework: INFO
+        org.hibernate.SQL: DEBUG
+        org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+        com.zaxxer.hikari: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      enabled: true
