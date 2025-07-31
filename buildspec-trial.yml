@@ -19,7 +19,7 @@ phases:
     commands:
       - echo "Build phase starting ..."
       - echo "Starting MySQL Docker container for tests ..."
-      - docker run --name mysql-test -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=testdb -d mysql:latest
+      - docker run --name mysql-test -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=testdb -d mysql:8.0.36
       - echo "Starting the Gradle testing task ..."
       - ./gradlew test
       - echo "Stopping MySQL Docker container ..."
