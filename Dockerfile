@@ -9,7 +9,7 @@ FROM amazoncorretto:21
 
 # Set the working directory in the container
 RUN mkdir -p /usr/app
-ENV JAR_NAME=roleplayacademyapi-0.0.1-SNAPSHOT.jar.jar
+ENV JAR_NAME=roleplayacademyapi-0.0.1-SNAPSHOT.jar
 ENV APP_HOME=/usr/app
 WORKDIR $APP_HOME
 COPY --from=BUILD /usr/build/build/libs/$JAR_NAME $APP_HOME
@@ -23,4 +23,4 @@ RUN ls -la build
 EXPOSE 8080
 
 # Run the jar file
-ENTRYPOINT exec java -jar build/libs/$JAR_NAME
+ENTRYPOINT exec java -jar $APP_HOME/$JAR_NAME
