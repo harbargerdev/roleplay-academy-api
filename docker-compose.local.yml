@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   mysql:
-    image: 'mysql:latest'
+    image: 'mysql:8.0.36'
     environment:
       - 'MYSQL_DATABASE=mydatabase'
       - 'MYSQL_PASSWORD=secret'
