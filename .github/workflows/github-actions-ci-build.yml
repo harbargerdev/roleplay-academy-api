@@ -1,7 +1,7 @@
 name: CI Build
 on: [push]
 jobs:
-  Hello-World-Job:
+  run-aws-codebuild-ci-build:
     runs-on: self-hosted
     steps:
       - name: Run AWS Codebuild
