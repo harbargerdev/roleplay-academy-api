@@ -4,10 +4,10 @@ spring:
     profiles:
       active: dev
   datasource:
-    url: jdbc:mysql://mysql:3306/mydatabase?useSSL=false&allowPublic
+    url: jdbc:mysql://mysql:3306/mydatabase?useSSL=true&allowPublic
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: myuser
-    password: ####
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   #jpa:
     #database-platform: org.hibernate.dialect.MySQL8Dialect
     #show-sql: true
