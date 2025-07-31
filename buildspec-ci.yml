@@ -27,9 +27,6 @@ phases:
       - echo "Stopping MySQL Docker container..."
       - docker stop mysql-test
       - docker rm mysql-test
-      - chmod +x ./build_scripts/build_status_update.sh
-      - ./build_scripts/build_status_update.sh
-      - echo "Post-build phase completed"
 
 artifacts:
   files:
