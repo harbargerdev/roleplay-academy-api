@@ -7,34 +7,13 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Run AWS Codebuild
-        run: |
-          echo "Starting AWS CodeBuild with buildspec.yml..."
-          BUILD_ID=$(aws codebuild start-build \
-            --project-name codebuild-roleplay-academy-api-ci-${{ github.run_id }}-${{ github.run_attempt }} \
-            --source-version ${{ github.sha }} \
-            --environment-variables-override name=GITHUB_REF,value=${{ github.ref }} \
-            --buildspec-override buildspec-ci.yml \
-            --query 'build.id' --output text)
-          echo "Build started with ID: $BUILD_ID"
-          START_TIME=$(date +%s)
-          TIMEOUT=1800 # 30 minutes in seconds
-          while true; do
-            CURRENT_TIME=$(date +%s)
-            ELAPSED_TIME=$((CURRENT_TIME - START_TIME))
-            if [[ $ELAPSED_TIME -ge $TIMEOUT ]]; then
-              echo "Build timed out after 30 minutes."
-              aws codebuild stop-build --id $BUILD_ID
-              exit 1
-            fi
-            BUILD_STATUS=$(aws codebuild batch-get-builds --ids $BUILD_ID --query 'builds[0].buildStatus' --output text)
-            echo "Current build status: $BUILD_STATUS"
-            if [[ "$BUILD_STATUS" == "SUCCEEDED" ]]; then
-              echo "Build succeeded."
-              break
-            elif [[ "$STATUS" == "FAILED" || "$STATUS" == "FAULT" || "$STATUS" == "STOPPED" || "$STATUS" == "TIMED_OUT" ]]; then
-              echo "Build failed."
-              exit 1
-            fi
-            sleep 10
-          done
-          echo "AWS CodeBuild completed successfully."
+        uses: aws-actions/aws-codebuild-run-build@v1
+        with:
+            project-name: codebuild-roleplay-academy-api-ci-${{ github.run_id }}-${{ github.run_attempt }}
+            source-version: ${{ github.sha }}
+            environment-variables-override: name=GITHUB_REF,value=${{ github.ref }}
+            buildspec-override: buildspec-ci.yml
+        env:
+          AWS_REGION: us-east-2
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
