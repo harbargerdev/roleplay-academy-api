@@ -17,7 +17,6 @@ COPY --from=BUILD /usr/build/build/libs/$JAR_NAME $APP_HOME
 # For debug purposes
 RUN pwd
 RUN ls -la $APP_HOME
-RUN ls -la build
 
 # Expose the port the application runs on
 EXPOSE 8080
