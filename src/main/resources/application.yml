@@ -4,7 +4,7 @@ spring:
     profiles:
       active: dev
   datasource:
-    url: jdbc:mysql://mysql:3306/mydatabase?useSSL=true&allowPublic
+    url: jdbc:mysql://mysql:3306/mydatabase?useSSL=true&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
@@ -13,14 +13,15 @@ spring:
     #show-sql: true
     #hibernate:
       #ddl-auto: update
-    servlet:
-        load-time-weaver: true
 server:
     port: 8080
     error:
         include-message: always
     servlet:
         context-path: /api
+        load-time:
+            # This is required for Spring Boot to work with JPA
+            enabled: true
 logging:
     level:
         org.springframework: INFO
