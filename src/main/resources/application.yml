@@ -4,15 +4,15 @@ spring:
     profiles:
       active: dev
   datasource:
-    url: jdbc:mysql://mysql:3306/mydatabase?useSSL=true&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://mysql:3306/${DB_NAME}?useSSL=true&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${DB_USERNAME}
+    username: ${DB_USER}
     password: ${DB_PASSWORD}
-  #jpa:
-    #database-platform: org.hibernate.dialect.MySQL8Dialect
-    #show-sql: true
-    #hibernate:
-      #ddl-auto: update
+#  jpa:
+#    database-platform: org.hibernate.dialect.MySQL8Dialect
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: update
 server:
     port: 8080
     error:
