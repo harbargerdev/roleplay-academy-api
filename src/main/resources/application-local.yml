@@ -3,7 +3,18 @@ spring:
     profiles:
       active: local
   datasource:
-    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    url: ${SPRING_DATASOURCE_URL}
     driver-class-name: org.postgresql.Driver
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  liquibase:
+    user: ${LIQUIBASE_USER}
+    password: ${LIQUIBASE_PASSWORD}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, liquibase
+logging:
+  level:
+    org.liquibase: DEBUG
