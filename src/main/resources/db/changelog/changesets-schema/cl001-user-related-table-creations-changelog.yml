@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+    id: 001
+    author: harbargerdev
+    changes:
+      - sqlFile:
+        path: db/changelog/changesets-schema/s001-user-related-table-creations.sql
+        relativeToChangelogFile: true

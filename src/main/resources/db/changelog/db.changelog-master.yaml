@@ -1,5 +1,4 @@
 databaseChangeLog:
   - include:
-    file: db/changelog/changesets-schema/cl001.yml
-  - include:
-    file: db/changelog/changesets-schema/cl002.yml
+    file: changesets-schema/cl001-user-related-table-creations-changelog.yml
+    relativeToChangelogFile: true
