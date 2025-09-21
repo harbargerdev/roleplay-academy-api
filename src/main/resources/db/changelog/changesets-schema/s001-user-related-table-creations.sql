@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS party (
     FOREIGN KEY (created_by) REFERENCES profile(id) ON DELETE RESTRICT
 );
 
--- PartMembership table
+-- PartyMembership table
 CREATE TABLE IF NOT EXISTS party_membership (
     party_id UUID NOT NULL,
     user_id UUID NOT NULL,
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS party_membership (
     FOREIGN KEY (party_mbr_status_cd) REFERENCES party_member_status(status_cd) ON DELETE RESTRICT
 );
 
--- PartMembership table
+-- PartyInvite table
 CREATE TABLE IF NOT EXISTS party_invite (
     id UUID PRIMARY KEY,
     party_id UUID NOT NULL,
