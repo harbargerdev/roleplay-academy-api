@@ -4,9 +4,9 @@ services:
   postgres:
     image: 'postgres:16.2'
     environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_USER=root'
-      - 'POSTGRES_PASSWORD=verysecret'
+      - 'POSTGRES_DB=${DB_NAME}'
+      - 'POSTGRES_USER=${DB_USERNAME}'
+      - 'POSTGRES_PASSWORD=${DB_PASSWORD}'
     ports:
       - '5432:5432'
     healthcheck:
@@ -21,6 +21,6 @@ services:
     ports:
       - '8080:8080'
     environment:
-      - 'SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/mydatabase'
-      - 'SPRING_DATASOURCE_USERNAME=root'
-      - 'SPRING_DATASOURCE_PASSWORD=verysecret'
+      - 'SPRING_DATASOURCE_URL=jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}'
+      - 'SPRING_DATASOURCE_USERNAME=${DB_USERNAME}'
+      - 'SPRING_DATASOURCE_PASSWORD=${DB_USERNAME}'
