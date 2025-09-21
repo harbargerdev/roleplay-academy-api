@@ -1,10 +1,11 @@
 #!/bin/bash
 ./gradlew clean
 
-echo "MYSQL_ROOT_PASSWORD=$(openssl rand -base64 16)" > .env
-echo "MYSQL_PASSWORD=$(openssl rand -base64 16)" >> .env
-echo "MYSQL_USER=myuser" >> .env
-echo "MYSQL_DATABASE=mydatabase" >> .env
+echo "POSTGRES_PASSWORD=$(openssl rand -base64 16)" >> .env
+echo "POSTGRES_USER=postgres" >> .env
+echo "POSTGRES_DB=roleplayacademy" >> .env
+echo "POSTGRES_HOST=postgres" >> .env
+echo "POSTGRES_PORT=5432" >> .env
 
 # Run the Docker container with the generated credentials
 docker compose -f docker-compose.local.yml --env-file .env up --build
