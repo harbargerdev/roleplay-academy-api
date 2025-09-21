@@ -9,3 +9,5 @@ spring:
     password: verysecret
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-tests.yaml
