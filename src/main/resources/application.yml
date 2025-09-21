@@ -13,9 +13,12 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: none
-liquibase:
-  enabled: true
-  change-log: classpath:db/changelog/db.changelog-master.yaml
+  liquibase:
+    user: ${LIQUIBASE_USER}
+    password: ${LIQUIBASE_PASSWORD}
+    enabled: true
+    change-log: db/changelog/db.changelog-master.yaml
+    show-summary: summary
 server:
     port: 8080
     error:
