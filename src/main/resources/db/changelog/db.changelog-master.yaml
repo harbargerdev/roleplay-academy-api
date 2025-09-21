@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
-      file: db/changelog/changeset-empty/changeset.yml
+    file: db/changelog/changesets-schema/cl001.yml
+  - include:
+    file: db/changelog/changesets-schema/cl002.yml
