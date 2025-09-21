@@ -19,13 +19,15 @@ services:
         condition: service_healthy
     environment:
       - 'SPRING_PROFILES_ACTIVE=local'
+      - 'DB_HOST=${POSTGRES_HOST}'
+      - 'DB_PORT=${POSTGRES_PORT}'
       - 'DB_NAME=${POSTGRES_DB}'
       - 'DB_USER=${POSTGRES_USER}'
       - 'DB_PASSWORD=${POSTGRES_PASSWORD}'
     ports:
       - '8080:8080'
     healthcheck:
-      test: ['CMD-SHELL', 'curl -f http://localhost:8080/actuator/health || exit 1']
+      test: ['CMD-SHELL', 'curl -f http://localhost:8080/api/actuator/health || exit 1']
       interval: 10s
       timeout: 5s
       retries: 5
