@@ -1,28 +1,27 @@
 services:
-  mysql:
-    image: 'mysql:8.0.36'
+  postgres:
+    image: 'postgres:16.2'
     environment:
-      - 'MYSQL_DATABASE=${MYSQL_DATABASE}'
-      - 'MYSQL_PASSWORD=${MYSQL_PASSWORD}'
-      - 'MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}'
-      - 'MYSQL_USER=${MYSQL_USER}'
+      - 'POSTGRES_DB=${POSTGRES_DB}'
+      - 'POSTGRES_USER=${POSTGRES_USER}'
+      - 'POSTGRES_PASSWORD=${POSTGRES_PASSWORD}'
     ports:
-      - '3306:3306'
+      - '5432:5432'
     healthcheck:
-      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      test: ['CMD', 'pg_isready', '-U', '${POSTGRES_USER}']
       interval: 10s
       timeout: 5s
       retries: 5
   spring-api:
     build: .
     depends_on:
-      mysql:
+      postgres:
         condition: service_healthy
     environment:
       - 'SPRING_PROFILES_ACTIVE=local'
-      - 'DB_NAME=${MYSQL_DATABASE}'
-      - 'DB_USER=${MYSQL_USER}'
-      - 'DB_PASSWORD=${MYSQL_PASSWORD}'
+      - 'DB_NAME=${POSTGRES_DB}'
+      - 'DB_USER=${POSTGRES_USER}'
+      - 'DB_PASSWORD=${POSTGRES_PASSWORD}'
     ports:
       - '8080:8080'
     healthcheck:
