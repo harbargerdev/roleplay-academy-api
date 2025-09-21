@@ -18,13 +18,13 @@ phases:
   build:
     commands:
       - echo "Build phase starting ..."
-      - echo "Starting MySQL Docker container for tests ..."
-      - docker run --name mysql-test -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=testdb -d mysql:latest
+      - echo "Starting PostgreSQL Docker container for tests ..."
+      - docker run --name postgres-test -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=testdb -e POSTGRES_USER=postgres -d postgres:16.2
       - echo "Starting the Gradle testing task ..."
       - ./gradlew test
-      - echo "Stopping MySQL Docker container ..."
-      - docker stop mysql-test
-      - docker rm mysql-test
+      - echo "Stopping PostgreSQL Docker container ..."
+      - docker stop postgres-test
+      - docker rm postgres-test
       - echo "Building Docker image ..."
       - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
       - echo "Tagging Docker image ..."
