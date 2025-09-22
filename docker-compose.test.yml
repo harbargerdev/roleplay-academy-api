@@ -1,17 +1,21 @@
 version: '3.7'
 
 services:
-  mysql:
-    image: 'mysql:8.0.36'
+  postgres:
+    image: 'postgres:16.2'
     environment:
-      - 'MYSQL_DATABASE=mydatabase'
-      - 'MYSQL_PASSWORD=secret'
-      - 'MYSQL_ROOT_PASSWORD=verysecret'
-      - 'MYSQL_USER=myuser'
+      - 'POSTGRES_DB=mydatabase'
+      - 'POSTGRES_USER=myuser'
+      - 'POSTGRES_PASSWORD=secret'
     ports:
-      - '3306:3306'
+      - '5432:5432'
+    healthcheck:
+      test: ['CMD', 'pg_isready', '-U', 'myuser']
+      interval: 10s
+      timeout: 5s
+      retries: 5
   spring-api:
     depends_on:
-      - mysql
+      - postgres
     environment:
       - 'SPRING_PROFILES_ACTIVE=prod'

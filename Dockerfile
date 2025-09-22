@@ -12,6 +12,10 @@ RUN mkdir -p /usr/app
 WORKDIR /usr/app
 COPY --from=build /usr/build/build/libs/rpa-api-*-SNAPSHOT.jar /usr/app/app.jar
 
+# Copy entrypoint script for local use
+COPY startup-scripts/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 # Expose the port the application runs on
 EXPOSE 8080
 

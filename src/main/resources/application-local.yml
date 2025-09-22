@@ -3,12 +3,28 @@ spring:
     profiles:
       active: local
   datasource:
-    url: jdbc:mysql://mysql:3306/${DB_NAME}?useSSL=false&allowPublicKeyRetrieval=true
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
-#  jpa:
-#      database-platform: org.hibernate.dialect.MySQL8Dialect
-#      show-sql: true
-#      hibernate:
-#        ddl-auto: update
+    url: ${SPRING_DATASOURCE_URL}
+    driver-class-name: org.postgresql.Driver
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    user: ${LIQUIBASE_USER}
+    password: ${LIQUIBASE_PASSWORD}
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    show-summary: summary
+    default-schema: roleplayacademy
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, liquibase
+logging:
+  level:
+    org.springframework.boot.autoconfigure.liquibase: DEBUG
+    org.liquibase: DEBUG

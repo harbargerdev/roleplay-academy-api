@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: s002-user-related-table-creations-h2
+      author: harbargerdev
+      labels: initialization
+      changes:
+        - sqlFile:
+            path: s002-user-related-table-creations-h2.sql
+            relativeToChangelogFile: true

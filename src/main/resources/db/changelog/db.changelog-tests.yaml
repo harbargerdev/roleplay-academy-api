@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changesets-testonly/cl001-initial-schema-creation-h2-changelog.yml
+  - include:
+      file: db/changelog/changesets-testonly/cl002-user-related-table-creations-h2-changelog.yml

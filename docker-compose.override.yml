@@ -1,8 +1,21 @@
 version: '3.7'
 
 services:
+  postgres:
+    image: 'postgres:16.2'
+    environment:
+      - 'POSTGRES_DB=testdb'
+      - 'POSTGRES_USER=testuser'
+      - 'POSTGRES_PASSWORD=testsecret'
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: ['CMD', 'pg_isready', '-U', 'testuser']
+      interval: 10s
+      timeout: 5s
+      retries: 5
   spring-api:
     depends_on:
-      - mysql
+      - postgres
     environment:
       - 'SPRING_PROFILES_ACTIVE=test'
