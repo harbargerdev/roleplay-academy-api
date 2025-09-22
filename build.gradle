@@ -32,6 +32,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	implementation 'org.liquibase:liquibase-core'
+    implementation "org.springframework.boot:spring-boot-liquibase"
 	implementation 'org.springframework.session:spring-session-core'
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'org.postgresql:postgresql:42.7.3'
