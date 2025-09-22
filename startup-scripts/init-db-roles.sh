@@ -25,7 +25,7 @@ psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "CREATE SCHEMA
 # Add citext extension to roleplayacademy schema
 psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA roleplayacademy;"
 
-# Add pg_trgm extension ot roleplayacademy schema
+# Add pg_trgm extension to roleplayacademy schema
 psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA roleplayacademy;"
 
 # Generate a random password for the new App role
