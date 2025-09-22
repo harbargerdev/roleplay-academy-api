@@ -1,14 +1,9 @@
 databaseChangeLog:
   - changeSet:
-      id: s001-initial-schema-creation-h2
+      id: c001-initial-schema-creation-h2
       author: harbargerdev
-      runOnChange: true
-      runAlways: false
+      labels: initialization
       changes:
         - sqlFile:
-            path: db/changelog/changesets-testonly/s001-initial-schema-creation-h2.sql
+            path: s001-initial-schema-creation-h2.sql
             relativeToChangelogFile: true
-            splitStatements: true
-            stripComments: true
-
-

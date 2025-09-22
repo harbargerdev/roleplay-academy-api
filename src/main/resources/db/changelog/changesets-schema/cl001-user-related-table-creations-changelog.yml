@@ -1,8 +1,9 @@
 databaseChangeLog:
   - changeSet:
-    id: 001
-    author: harbargerdev
-    changes:
-      - sqlFile:
-        path: db/changelog/changesets-schema/s001-user-related-table-creations.sql
-        relativeToChangelogFile: true
+      id: c001-initial-schema-creation-h2
+      author: harbargerdev
+      labels: initialization
+      changes:
+        - sqlFile:
+            path: s001-user-related-table-creations.sql
+            relativeToChangelogFile: true
