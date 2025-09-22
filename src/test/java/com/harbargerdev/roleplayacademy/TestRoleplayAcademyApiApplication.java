@@ -1,5 +1,6 @@
-package com.harbargerdev.roleplayacademyapi;
+package com.harbargerdev.roleplayacademy;
 
+import com.harbargerdev.roleplayacademy.api.RoleplayAcademyApiApplication;
 import org.springframework.boot.SpringApplication;
 
 public class TestRoleplayAcademyApiApplication {

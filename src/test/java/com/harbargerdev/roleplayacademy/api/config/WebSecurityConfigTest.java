@@ -1,4 +1,4 @@
-package com.harbargerdev.roleplayacademyapi.config;
+package com.harbargerdev.roleplayacademy.api.config;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
