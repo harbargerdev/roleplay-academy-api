@@ -134,7 +134,6 @@ CREATE INDEX IF NOT EXISTS idx_party_membership_party_id ON party_membership(par
 CREATE INDEX IF NOT EXISTS idx_party_membership_active ON party_membership(party_id, user_id) WHERE party_mbr_status_cd = 'active';
 
 -- Optional: GIN trigram index for search (requires pg_trgm extension)
-CREATE EXTENSION IF NOT EXISTS pg_trgm;
 CREATE INDEX IF NOT EXISTS idx_profile_handle_trgm ON profile USING gin(handle gin_trgm_ops);
 CREATE INDEX IF NOT EXISTS idx_party_name_trgm ON party USING gin(name gin_trgm_ops);
 
