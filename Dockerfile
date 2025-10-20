@@ -5,7 +5,7 @@ COPY . .
 RUN gradle build --stacktrace
 
 # Package Stage
-FROM amazoncorretto:21
+FROM amazoncorretto:21-jdk-alpine
 
 # Set the working directory in the container
 RUN mkdir -p /usr/app
