@@ -6,5 +6,6 @@ jobs:
   run-codebuild-roleplay-academy-api-github-action-ci-job:
     runs-on:
       - codebuild-roleplay-academy-api-github-action-ci-${{ github.run_id }}-${{ github.run_attempt }}
+        buildspec-override:true
     steps:
       - run: echo "Hello World"
