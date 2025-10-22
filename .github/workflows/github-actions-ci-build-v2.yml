@@ -43,7 +43,11 @@ jobs:
           i=0
       
           while true; do
-          status=$(aws codebuild batch-get-builds --ids "$BUILD_ID" --query "builds[0].buildStatus" --output text 2>/dev/null || echo "UNKNOWN")
+          status=$(aws codebuild batch-get-builds --ids "$BUILD_ID" --query "builds[0].buildStatus" --output text 2>&1)
+          if [ $? -ne 0 ]; then
+            echo "Error fetching build status: $status"
+            status="UNKNOWN"
+          fi
           echo "CodeBuild status: $status"
           
           case "$status" in
