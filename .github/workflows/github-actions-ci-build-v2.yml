@@ -17,12 +17,13 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: ${{ secrets.AWS_REGION }}
+          mask-aws-account-id: true
 
       - name: Run AWS CodeBuild
         id: start_build
         run: |
             BUILD_ID=$(aws codebuild start-build \
-                --project-name codebuild-roleplay-academy-api-ci \
+                --project-name roleplay-academy-api-github-action-ci \
                 --source-version ${{ github.sha }} \
                 --environment-variables-override name=GITHUB_REF,value=${{ github.ref }} \
                 --buildspec-override buildspec-ci.yml \
