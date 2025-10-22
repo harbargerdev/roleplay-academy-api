@@ -23,7 +23,7 @@ jobs:
         id: start_build
         run: |
             BUILD_ID=$(aws codebuild start-build \
-                --project-name roleplay-academy-api-github-action-ci \
+                --project-name ${{ CODEBUILD_PROJECT_NAME }} \
                 --source-version ${{ github.sha }} \
                 --environment-variables-override name=GITHUB_REF,value=${{ github.ref }} \
                 --buildspec-override buildspec-ci.yml \
