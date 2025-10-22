@@ -35,4 +35,36 @@ jobs:
         run: echo "Started build with ID.. ${{ env.BUILD_ID }}"
 
       - name: Wait for CodeBuild to complete
-        run: aws codebuild wait build-complete --ids ${{ env.BUILD_ID }}
+        run: |
+          # Poll CodeBuild for status until terminal state or timeout
+          timeout_minutes=30
+          interval_seconds=10
+          max_iterations=$(( (timeout_minutes * 60) / interval_seconds ))
+          i=0
+      
+          while true; do
+          status=$(aws codebuild batch-get-builds --ids "$BUILD_ID" --query "builds[0].buildStatus" --output text 2>/dev/null || echo "UNKNOWN")
+          echo "CodeBuild status: $status"
+          
+          case "$status" in
+          SUCCEEDED)
+          echo "Build succeeded"; exit 0;;
+          FAILED|FAULT|STOPPED|TIMED_OUT)
+          echo "Build finished with status: $status"; exit 1;;
+          IN_PROGRESS|QUEUED|STOPPING)
+          ;;
+          UNKNOWN)
+          echo "Could not fetch build status yet."
+          ;;
+          *)
+          echo "Unrecognized status: $status"
+          ;;
+          esac
+          
+          i=$((i+1))
+          if [ "$i" -ge "$max_iterations" ]; then
+          echo "Timed out waiting for build after ${timeout_minutes} minutes"; exit 1
+          fi
+          
+          sleep $interval_seconds
+          done
