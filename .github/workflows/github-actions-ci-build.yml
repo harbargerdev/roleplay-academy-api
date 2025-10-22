@@ -1,4 +1,4 @@
-name: CI Build
+name: GitHub Action - CI Build
 on:
   pull_request:
     types: [opened, synchronize, reopened]
