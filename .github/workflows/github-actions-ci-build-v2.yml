@@ -1,0 +1,74 @@
+name: GitHub Action - CI Build
+on:
+  pull_request:
+      types: [opened, synchronize, reopened]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  run-codebuild-roleplay-academy-api-github-action-ci-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v5.1.0
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          mask-aws-account-id: true
+
+      - name: Run AWS CodeBuild
+        id: start_build
+        run: |
+            BUILD_ID=$(aws codebuild start-build \
+                --project-name ${{ secrets.CODEBUILD_PROJECT_NAME }} \
+                --source-version ${{ github.sha }} \
+                --environment-variables-override name=GITHUB_REF,value=${{ github.ref }} \
+                --buildspec-override buildspec-ci.yml \
+                --query 'build.id' \
+                --output text)
+            echo "BUILD_ID=$BUILD_ID" >> $GITHUB_ENV
+
+      - name: Log started build
+        run: echo "Started build with ID.. ${{ env.BUILD_ID }}"
+
+      - name: Wait for CodeBuild to complete
+        run: |
+          # Poll CodeBuild for status until terminal state or timeout
+          timeout_minutes=30
+          interval_seconds=10
+          max_iterations=$(( (timeout_minutes * 60) / interval_seconds ))
+          i=0
+      
+          while true; do
+          status=$(aws codebuild batch-get-builds --ids "$BUILD_ID" --query "builds[0].buildStatus" --output text 2>&1)
+          if [ $? -ne 0 ]; then
+            echo "Error fetching build status: $status"
+            status="UNKNOWN"
+          fi
+          echo "CodeBuild status: $status"
+          
+          case "$status" in
+          SUCCEEDED)
+          echo "Build succeeded"; exit 0;;
+          FAILED|FAULT|STOPPED|TIMED_OUT)
+          echo "Build finished with status: $status"; exit 1;;
+          IN_PROGRESS|QUEUED|STOPPING)
+          ;;
+          UNKNOWN)
+          echo "Could not fetch build status yet."
+          ;;
+          *)
+          echo "Unrecognized status: $status"
+          ;;
+          esac
+          
+          i=$((i+1))
+          if [ "$i" -ge "$max_iterations" ]; then
+          echo "Timed out waiting for build after ${timeout_minutes} minutes"; exit 1
+          fi
+          
+          sleep $interval_seconds
+          done
