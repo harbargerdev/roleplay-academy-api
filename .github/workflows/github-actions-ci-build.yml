@@ -1,4 +1,4 @@
-name: GitHub Action - CI Build
+name: AWS Self-Hosted - CI Build
 on:
   pull_request:
     types: [opened, synchronize, reopened]
