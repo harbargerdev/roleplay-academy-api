@@ -34,7 +34,7 @@ jobs:
             echo "BUILD_ID=$BUILD_ID" >> $GITHUB_ENV
 
       - name: Log started build
-        run: echo "Started build with ID: ${{ env.BUILD_ID }}"
+        run: echo "Started build with ID.. ${{ env.BUILD_ID }}"
 
       - name: Wait for CodeBuild to complete
         run: aws codebuild wait build-complete --ids ${{ env.BUILD_ID }}
