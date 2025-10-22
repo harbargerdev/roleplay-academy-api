@@ -1,4 +1,4 @@
-name: CI Build
+name: GH Action - CI Build
 on:
   pull_request:
     types: [opened, synchronize, reopened]
