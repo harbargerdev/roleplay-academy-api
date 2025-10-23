@@ -1,5 +1,12 @@
 version: 0.2
 
+env:
+  variables:
+    AWS_ACCOUNT_ID: $AWS_ACCOUNT_ID
+    AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+    POSTGRES_TAG: 16.2
+    ECR_REPO_PREFIX: $ECR_REPO_PREFIX
+
 phases:
   install:
     runtime-versions:
@@ -12,6 +19,8 @@ phases:
     commands:
       - echo "Pre-build phase starting ..."
       - ./gradlew compileJava
+      - echo "Logging in to the Amazon ECR"
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
       - echo "Pre-build phase completed"
   build:
     commands:
@@ -22,7 +31,9 @@ phases:
     commands:
       - echo "Post-build phase starting ..."
       - echo "Starting PostgreSQL Docker container for tests..."
-      - docker run --name postgres-test -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=testdb -e POSTGRES_USER=postgres -d postgres:16.2
+      - ECR_POSTGRES_IMAGE=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_REPO_PREFIX/library/postgres:$POSTGRES_TAG
+      - docker pull ${ECR_POSTGRES_IMAGE} || true
+      - docker run --name postgres-test -e POSTGRES_PASSWORD=$DB_PASSWORD -e POSTGRES_DB=testdb -e POSTGRES_USER=postgres -d ${ECR_POSTGRES_IMAGE}
       - ./gradlew test
       - echo "Stopping PostgreSQL Docker container..."
       - docker stop postgres-test
