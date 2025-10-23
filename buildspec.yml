@@ -7,6 +7,7 @@ env:
     DB_PASSWORD: ""
     ECR_REPO_PREFIX: ""
     AWS_ACCOUNT_ID: ""
+    ImageName: ""
 
 phases:
   install:
