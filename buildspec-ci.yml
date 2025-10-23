@@ -2,10 +2,7 @@ version: 0.2
 
 env:
   variables:
-    AWS_ACCOUNT_ID: $AWS_ACCOUNT_ID
-    AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
     POSTGRES_TAG: 16.2
-    ECR_REPO_PREFIX: $ECR_REPO_PREFIX
 
 phases:
   install:
