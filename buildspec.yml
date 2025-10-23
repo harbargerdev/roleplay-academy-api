@@ -1,5 +1,14 @@
 version: 0.2
 
+env:
+  variables:
+    AWS_DEFAULT_REGION: ""
+    POSTGRES_TAG: 16.2
+    DB_PASSWORD: ""
+    ECR_REPO_PREFIX: ""
+    AWS_ACCOUNT_ID: ""
+    ImageName: ""
+
 phases:
   install:
     runtime-versions:
@@ -11,7 +20,6 @@ phases:
   pre_build:
     commands:
       - echo "Pre-build phase starting ..."
-      - ./gradlew compileJava
       - echo "Logging in to the Amazon ECR"
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
       - echo "Pre-build phase completed"
@@ -19,7 +27,12 @@ phases:
     commands:
       - echo "Build phase starting ..."
       - echo "Starting PostgreSQL Docker container for tests ..."
-      - docker run --name postgres-test -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=testdb -e POSTGRES_USER=postgres -d postgres:16.2
+      - |
+        ECR_POSTGRES_IMAGE="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_REPO_PREFIX/library/postgres:$POSTGRES_TAG"
+        if ! docker pull "${ECR_POSTGRES_IMAGE}"; then
+        echo "WARNING: Failed to pull ${ECR_POSTGRES_IMAGE}. Using local image if available."
+        fi
+        docker run --name postgres-test -e POSTGRES_PASSWORD="$DB_PASSWORD" -e POSTGRES_DB=testdb -e POSTGRES_USER=postgres -d "${ECR_POSTGRES_IMAGE}"
       - echo "Starting the Gradle testing task ..."
       - ./gradlew test
       - echo "Stopping PostgreSQL Docker container ..."
