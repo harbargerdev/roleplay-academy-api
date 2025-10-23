@@ -1,5 +1,5 @@
 # Build Stage
-FROM gradle:latest AS build
+FROM gradle:9.1.0-jdk21-corretto AS build
 WORKDIR /usr/build
 COPY . .
 RUN gradle build --stacktrace
