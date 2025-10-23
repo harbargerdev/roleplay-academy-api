@@ -29,7 +29,10 @@ phases:
       - echo "Post-build phase starting ..."
       - echo "Starting PostgreSQL Docker container for tests..."
       - ECR_POSTGRES_IMAGE=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_REPO_PREFIX/library/postgres:$POSTGRES_TAG
-      - docker pull ${ECR_POSTGRES_IMAGE} || true
+      - |
+        if ! docker pull ${ECR_POSTGRES_IMAGE}; then
+        echo "WARNING: Failed to pull ${ECR_POSTGRES_IMAGE}. Using local image if available."
+        fi
       - docker run --name postgres-test -e POSTGRES_PASSWORD=$DB_PASSWORD -e POSTGRES_DB=testdb -e POSTGRES_USER=postgres -d ${ECR_POSTGRES_IMAGE}
       - ./gradlew test
       - echo "Stopping PostgreSQL Docker container..."
