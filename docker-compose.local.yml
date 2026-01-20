@@ -45,7 +45,7 @@ services:
     volumes:
       - secrets-volume:/run/secrets
       - ./startup-scripts/entrypoint.sh:/entrypoint.sh:ro
-    entrypoint: ["bash", "/entrypoint.sh"]
+    entrypoint: ["sh", "/entrypoint.sh"]
     healthcheck:
       test: ['CMD-SHELL', 'curl -f http://localhost:8080/api/actuator/health || exit 1']
       interval: 10s
