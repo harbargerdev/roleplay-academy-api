@@ -41,9 +41,13 @@ public class Profile implements Serializable {
     @Column(name="created_at", nullable = false, updatable = false)
     private Date createdAt;
 
-    @Column(name="deleted_at" nullable = true)
+    @Column(name="deleted_at", nullable = true)
     private Date deletedAt;
 
     @Transient
     private List<Friendship> friends;
+
+    @OneToMany
+    @JoinColumn(name="user_id", nullable = false, updatable = false)
+    private List<PartyMembership> partyMemberships;
 }
